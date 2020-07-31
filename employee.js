@@ -9,9 +9,9 @@ class Employee {
     if (!email) {
       throw new Error("You are missing the email.");
     }
-    this.name = name;
-    this.id = id;
-    this.email = email;
+    this.name = getName();
+    this.id = getID();
+    this.email = getEmail();
   }
 
   getName() {}
@@ -20,3 +20,5 @@ class Employee {
 
   getEmail() {}
 }
+
+module.exports = Employee;
