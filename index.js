@@ -36,25 +36,50 @@ function promptUser(answers) {
       message: "Role?",
       choices: ["Manager", "Engineer", "Intern"],
     },
+    {
+      type: "list",
+      name: "next",
+      message: "Would you like to enter a new employee?",
+      choices: ["yes", "no"],
+    },
   ]);
 }
+function promptLoop() {
+  promptUser()
+    .then(function (answers) {
+      console.log(
+        "Name: " +
+          answers.name +
+          "\nID Number: " +
+          answers.id +
+          "\nEmail Address: " +
+          answers.email +
+          "\nRole: " +
+          answers.role +
+          "\nEnter New Employee?: " +
+          answers.next
+      );
+      if (answers.next === "yes") {
+        promptLoop();
+      } else {
+        console.log(
+          "Name: " +
+            answers.name +
+            "\nID Number: " +
+            answers.id +
+            "\n Email Address: " +
+            answers.email +
+            "\nRole: " +
+            answers.role
+        );
+      }
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+}
 
-promptUser()
-  .then(function (answers) {
-    console.log(
-      "Name: " +
-        answers.name +
-        "\nID Number: " +
-        answers.id +
-        "\n Email Address: " +
-        answers.email +
-        "\nRole: " +
-        answers.role
-    );
-  })
-  .catch(function (err) {
-    console.log(err);
-  });
+promptLoop();
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
