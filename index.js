@@ -1,17 +1,17 @@
-const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
+// const Manager = require("./lib/manager");
+// const Engineer = require("./lib/engineer");
+// const Intern = require("./lib/intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
-const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
+// const OUTPUT_DIR = path.resolve(__dirname, "output");
+// const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-const render = require("./lib/htmlRenderer");
-const util = require("util");
+// const render = require("./lib/htmlRenderer");
+// const util = require("util");
 
-const writeFileAsync = util.promisify(fs.writeFile);
+// const writeFileAsync = util.promisify(fs.writeFile);
 
 function promptUser(answers) {
   return inquirer.prompt([
@@ -23,7 +23,7 @@ function promptUser(answers) {
     {
       type: "input",
       message: "ID #",
-      name: "ID",
+      name: "id",
     },
     {
       type: "input",
@@ -31,31 +31,30 @@ function promptUser(answers) {
       name: "email",
     },
     {
-      type: "input",
-      message: "Role",
-      name: "Role",
-    },
-    {
       type: "list",
-      name: "Role",
+      name: "role",
       message: "Role?",
       choices: ["Manager", "Engineer", "Intern"],
     },
   ]);
 }
 
-// promptUser()
-//   .then(function (answers) {
-//     const markdown = generateMD(answers);
-
-//     return writeFileAsync("README.md", markdown);
-//   })
-//   .then(function () {
-//     console.log("Successfully wrote to README.md");
-//   })
-//   .catch(function (err) {
-//     console.log(err);
-//   });
+promptUser()
+  .then(function (answers) {
+    console.log(
+      "Name: " +
+        answers.name +
+        "\nID Number: " +
+        answers.id +
+        "\n Email Address: " +
+        answers.email +
+        "\nRole: " +
+        answers.role
+    );
+  })
+  .catch(function (err) {
+    console.log(err);
+  });
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
