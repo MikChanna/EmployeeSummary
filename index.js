@@ -9,42 +9,11 @@ const employees = [];
 // const OUTPUT_DIR = path.resolve(__dirname, "output");
 // const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-// const render = require("./lib/htmlRenderer");
-// const util = require("util");
+const render = require("./lib/htmlRenderer");
+const util = require("util");
 
-// const writeFileAsync = util.promisify(fs.writeFile);
+const writeFileAsync = util.promisify(fs.writeFile);
 
-// function promptUser(answers) {
-//   return inquirer.prompt([
-//     {
-//       type: "input",
-//       message: "Employee Name",
-//       name: "name",
-//     },
-//     {
-//       type: "input",
-//       message: "ID #",
-//       name: "id",
-//     },
-//     {
-//       type: "input",
-//       message: "Email Address",
-//       name: "email",
-//     },
-//     {
-//       type: "list",
-//       name: "role",
-//       message: "Role?",
-//       choices: ["Manager", "Engineer", "Intern"],
-//     },
-//     {
-//       type: "list",
-//       name: "next",
-//       message: "Would you like to enter a new employee?",
-//       choices: ["yes", "no"],
-//     },
-//   ]);
-// }
 function promptUser(answers) {
   return inquirer
     .prompt([
@@ -107,7 +76,7 @@ function addManager(answers) {
       if (answers.addEmployee === "yes") {
         promptUser();
       } else {
-        return;
+        renderHTML();
       }
     })
     .catch(function (err) {
@@ -157,7 +126,7 @@ function addEngineer(answers) {
       if (answers.addEmployee === "yes") {
         promptUser();
       } else {
-        return;
+        renderHTML();
       }
     })
     .catch(function (err) {
@@ -207,7 +176,7 @@ function addIntern(answers) {
       if (answers.addEmployee === "yes") {
         promptUser();
       } else {
-        return;
+        renderHTML();
       }
     })
     .catch(function (err) {
@@ -215,42 +184,11 @@ function addIntern(answers) {
     });
 }
 
+function renderHTML() {
+  return writeFileAsync("team.html", render(employees), "utf-8");
+}
+
 promptUser();
-// function promptLoop() {
-//   promptUser()
-//     .then(function (answers) {
-//       console.log(
-//         "Name: " +
-//           answers.name +
-//           "\nID Number: " +
-//           answers.id +
-//           "\nEmail Address: " +
-//           answers.email +
-//           "\nRole: " +
-//           answers.role +
-//           "\nEnter New Employee?: " +
-//           answers.next
-//       );
-//       if (answers.next === "yes") {
-//         promptLoop();
-//       } else {
-//         console.log(
-//           "Name: " +
-//             answers.name +
-//             "\nID Number: " +
-//             answers.id +
-//             "\n Email Address: " +
-//             answers.email +
-//             "\nRole: " +
-//             answers.role
-//         );
-//       }
-//     })
-//     .catch(function (err) {
-//       console.log(err);
-//     });
-// }
-// promptLoop();
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
