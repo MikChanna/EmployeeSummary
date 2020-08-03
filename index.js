@@ -78,7 +78,6 @@ function promptLoop() {
       console.log(err);
     });
 }
-
 promptLoop();
 
 // Write code to use inquirer to gather information about the development team members,
