@@ -1,5 +1,5 @@
 const Manager = require("./lib/manager");
-// const Engineer = require("./lib/engineer");
+const Engineer = require("./lib/engineer");
 // const Intern = require("./lib/intern");
 const inquirer = require("inquirer");
 const path = require("path");
@@ -96,17 +96,6 @@ function addManager(answers) {
       },
     ])
     .then((answers) => {
-      console.log(
-        "Role: Manager" +
-          "\nName: " +
-          answers.managerName +
-          "\nID Number: " +
-          answers.managerid +
-          "\nEmail Address: " +
-          answers.managerEmail +
-          "\nOffice Number" +
-          answers.officeNumber
-      );
       let manager = new Manager(
         answers.managerName,
         answers.managerid,
@@ -114,6 +103,56 @@ function addManager(answers) {
         answers.officeNumber
       );
       employees.push(manager);
+      console.log(employees);
+      if (answers.addEmployee === "yes") {
+        promptUser();
+      } else {
+        return;
+      }
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+}
+
+function addEngineer(answers) {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "What is the engineer's name?",
+        name: "engineerName",
+      },
+      {
+        type: "input",
+        message: "What is the engineer's ID #?",
+        name: "engineerid",
+      },
+      {
+        type: "input",
+        message: "What is the engineer's email address?",
+        name: "engineerEmail",
+      },
+      {
+        type: "input",
+        message: "What is the their github link?",
+        name: "github",
+      },
+      {
+        type: "list",
+        message: "Would you like to add another employee?",
+        name: "addEmployee",
+        choices: ["yes", "no"],
+      },
+    ])
+    .then((answers) => {
+      let engineer = new Engineer(
+        answers.engineerName,
+        answers.engineerid,
+        answers.engineerEmail,
+        answers.github
+      );
+      employees.push(engineer);
       console.log(employees);
       if (answers.addEmployee === "yes") {
         promptUser();
