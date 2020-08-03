@@ -1,9 +1,10 @@
-// const Manager = require("./lib/manager");
+const Manager = require("./lib/manager");
 // const Engineer = require("./lib/engineer");
 // const Intern = require("./lib/intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
+const employees = [];
 
 // const OUTPUT_DIR = path.resolve(__dirname, "output");
 // const outputPath = path.join(OUTPUT_DIR, "team.html");
@@ -13,72 +14,154 @@ const fs = require("fs");
 
 // const writeFileAsync = util.promisify(fs.writeFile);
 
+// function promptUser(answers) {
+//   return inquirer.prompt([
+//     {
+//       type: "input",
+//       message: "Employee Name",
+//       name: "name",
+//     },
+//     {
+//       type: "input",
+//       message: "ID #",
+//       name: "id",
+//     },
+//     {
+//       type: "input",
+//       message: "Email Address",
+//       name: "email",
+//     },
+//     {
+//       type: "list",
+//       name: "role",
+//       message: "Role?",
+//       choices: ["Manager", "Engineer", "Intern"],
+//     },
+//     {
+//       type: "list",
+//       name: "next",
+//       message: "Would you like to enter a new employee?",
+//       choices: ["yes", "no"],
+//     },
+//   ]);
+// }
 function promptUser(answers) {
-  return inquirer.prompt([
-    {
-      type: "input",
-      message: "Employee Name",
-      name: "name",
-    },
-    {
-      type: "input",
-      message: "ID #",
-      name: "id",
-    },
-    {
-      type: "input",
-      message: "Email Address",
-      name: "email",
-    },
-    {
-      type: "list",
-      name: "role",
-      message: "Role?",
-      choices: ["Manager", "Engineer", "Intern"],
-    },
-    {
-      type: "list",
-      name: "next",
-      message: "Would you like to enter a new employee?",
-      choices: ["yes", "no"],
-    },
-  ]);
+  return inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "role",
+        message: "Role?",
+        choices: ["Manager", "Engineer", "Intern"],
+      },
+    ])
+    .then((answers) => {
+      if (answers.role === "Manager") {
+        addManager();
+      } else if (answers.role === "Engineer") {
+        addEngineer();
+      } else if (answers.role === "Intern") {
+        addIntern();
+      }
+    });
 }
-function promptLoop() {
-  promptUser()
-    .then(function (answers) {
+function addManager(answers) {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "What is the manager's name?",
+        name: "managerName",
+      },
+      {
+        type: "input",
+        message: "What is the manager's ID #?",
+        name: "managerid",
+      },
+      {
+        type: "input",
+        message: "What is the manager's email address?",
+        name: "managerEmail",
+      },
+      {
+        type: "input",
+        message: "What is the manager's office number?",
+        name: "officeNumber",
+      },
+      {
+        type: "list",
+        message: "Would you like to add another employee?",
+        name: "addEmployee",
+        choices: ["yes", "no"],
+      },
+    ])
+    .then((answers) => {
       console.log(
-        "Name: " +
-          answers.name +
+        "Role: Manager" +
+          "\nName: " +
+          answers.managerName +
           "\nID Number: " +
-          answers.id +
+          answers.managerid +
           "\nEmail Address: " +
-          answers.email +
-          "\nRole: " +
-          answers.role +
-          "\nEnter New Employee?: " +
-          answers.next
+          answers.managerEmail +
+          "\nOffice Number" +
+          answers.officeNumber
       );
-      if (answers.next === "yes") {
-        promptLoop();
+      let manager = new Manager(
+        answers.managerName,
+        answers.managerid,
+        answers.managerEmail,
+        answers.officeNumber
+      );
+      employees.push(manager);
+      console.log(employees);
+      if (answers.addEmployee === "yes") {
+        promptUser();
       } else {
-        console.log(
-          "Name: " +
-            answers.name +
-            "\nID Number: " +
-            answers.id +
-            "\n Email Address: " +
-            answers.email +
-            "\nRole: " +
-            answers.role
-        );
+        return;
       }
     })
     .catch(function (err) {
       console.log(err);
     });
 }
-promptLoop();
+
+promptUser();
+// function promptLoop() {
+//   promptUser()
+//     .then(function (answers) {
+//       console.log(
+//         "Name: " +
+//           answers.name +
+//           "\nID Number: " +
+//           answers.id +
+//           "\nEmail Address: " +
+//           answers.email +
+//           "\nRole: " +
+//           answers.role +
+//           "\nEnter New Employee?: " +
+//           answers.next
+//       );
+//       if (answers.next === "yes") {
+//         promptLoop();
+//       } else {
+//         console.log(
+//           "Name: " +
+//             answers.name +
+//             "\nID Number: " +
+//             answers.id +
+//             "\n Email Address: " +
+//             answers.email +
+//             "\nRole: " +
+//             answers.role
+//         );
+//       }
+//     })
+//     .catch(function (err) {
+//       console.log(err);
+//     });
+// }
+// promptLoop();
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
