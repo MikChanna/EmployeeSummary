@@ -1,6 +1,6 @@
 const Manager = require("./lib/manager");
 const Engineer = require("./lib/engineer");
-// const Intern = require("./lib/intern");
+const Intern = require("./lib/intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
@@ -153,6 +153,56 @@ function addEngineer(answers) {
         answers.github
       );
       employees.push(engineer);
+      console.log(employees);
+      if (answers.addEmployee === "yes") {
+        promptUser();
+      } else {
+        return;
+      }
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+}
+
+function addIntern(answers) {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "What is the Intern's name?",
+        name: "internName",
+      },
+      {
+        type: "input",
+        message: "What is the intern's ID #?",
+        name: "internid",
+      },
+      {
+        type: "input",
+        message: "What is the intern's email address?",
+        name: "internEmail",
+      },
+      {
+        type: "input",
+        message: "What school does the intern attend?",
+        name: "school",
+      },
+      {
+        type: "list",
+        message: "Would you like to add another employee?",
+        name: "addEmployee",
+        choices: ["yes", "no"],
+      },
+    ])
+    .then((answers) => {
+      let intern = new Intern(
+        answers.internName,
+        answers.internid,
+        answers.internEmail,
+        answers.school
+      );
+      employees.push(intern);
       console.log(employees);
       if (answers.addEmployee === "yes") {
         promptUser();
