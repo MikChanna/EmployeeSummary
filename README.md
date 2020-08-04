@@ -29,6 +29,8 @@ Here is a link to the demo: https://drive.google.com/file/d/1ef1GZ4truhR1R1-F34n
 ## Test Instructions
 
 Test are included in the test folder.  You may run the test by running `npm run test` in your command line.  Here is a screenshot of the test before the validators were added.
+
+
 ![Screen Shot 2020-08-03 at 5 27 21 PM](https://user-images.githubusercontent.com/61893686/89245631-3c070780-d5d7-11ea-829b-b6a5863d46dd.png)
 
 
